@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/Projects/c_projects/Spear/Agent",
-      "program": "d:/Projects/c_projects/Spear/Agent/build/Debug/outDebug",
+      "cwd": "d:/Projects/c_projects/Spear/Agent/src",
+      "program": "d:/Projects/c_projects/Spear/Agent/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
