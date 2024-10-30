@@ -131,7 +131,7 @@ typedef struct _WINDOWS {
 		_WinHttpReceiveResponse    rWinHttpReceiveResponse;
 		_WinHttpQueryHeaders       rWinHttpQueryHeaders;
 		_WinHttpQueryDataAvailable rWinHttpQueryDataAvailable;
-		_WinHttpReadData	       rWinHttpReadData;
+		_WinHttpReadData           rWinHttpReadData;
 		_WinHttpCloseHandle        rWinHttpCloseHandle;
 		_WinHttpSetOption          rWinHttpSetOption;
 
