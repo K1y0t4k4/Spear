@@ -1,31 +1,32 @@
 #ifndef _DEFINE_H_
 #define _DEFINE_H_
-#include <winternl.h>
+#include <windows.h>
 #include <winhttp.h>
+#include <winternl.h>
 
 // dll
-char STR_NTDLL[]                     = {'n', 't', 'd', 'l', 'l', '.', 'd', 'l', 'l', '\0'};
-char STR_WINHTTP[]                   = {'w', 'i', 'n', 'h', 't', 't', 'p', '.', 'd', 'l', 'l', '\0'};
+static char STR_NTDLL[]                     = {'n', 't', 'd', 'l', 'l', '.', 'd', 'l', 'l', '\0'};
+static char STR_WINHTTP[]                   = {'w', 'i', 'n', 'h', 't', 't', 'p', '.', 'd', 'l', 'l', '\0'};
 
 
-char STR_LOADLIBRARYA[]              = {'L', 'o', 'a', 'd', 'L', 'i', 'b', 'r', 'a', 'r', 'y', 'A', '\0'};
-char STR_GETPROCADDRESS[]            = {'G', 'e', 't', 'P', 'r', 'o', 'c', 'A', 'd', 'd', 'r', 'e', 's', 's', '\0'};
-
-//ntdll.dll
-char STR_RTLADJUSTPRIVILEGE[]        = {'R', 't', 'l', 'A', 'd', 'j', 'u', 's', 't', 'P', 'r', 'i', 'v', 'i', 'l', 'e', 'g', 'e', '\0'};
-char STR_NTRAISEHARDERROR[]          = {'N', 't', 'R', 'a', 'i', 's', 'e', 'H', 'a', 'r', 'd', 'E', 'r', 'r', 'o', 'r', '\0'};
+static char STR_LOADLIBRARYA[]              = {'L', 'o', 'a', 'd', 'L', 'i', 'b', 'r', 'a', 'r', 'y', 'A', '\0'};
+static char STR_GETPROCADDRESS[]            = {'G', 'e', 't', 'P', 'r', 'o', 'c', 'A', 'd', 'd', 'r', 'e', 's', 's', '\0'};
 
 //ntdll.dll
-char STR_WINHTTPOPEN[] 		         = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', '\0'};
-char STR_WINHTTPCONNECT[]            = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'o', 'n', 'n', 'e', 'c', 't', '\0'};
-char STR_WINHTTPOPENREQUEST[]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
-char STR_WINHTTPSENDREQUEST[]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 'n', 'd', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
-char STR_WINHTTPRECEIVERESPONSE[]    = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'c', 'e', 'i', 'v', 'e', 'R', 'e', 's', 'p', 'o', 'n', 's', 'e', '\0'};
-char STR_WINHTTPQUERYHEADERS[]       = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'H', 'e', 'a', 'd', 'e', 'r', 's', '\0'};
-char STR_WINHTTPQUERYDATAAVAILABLE[] = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'D', 'a', 't', 'a', 'A', 'v', 'a', 'i', 'l', 'a', 'b', 'l', 'e', '\0'};
-char STR_WINHTTPREADDATA[]           = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'a', 'd', 'D', 'a', 't', 'a', '\0'};
-char STR_WINHTTPCLOSEHANDLE[]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'l', 'o', 's', 'e', 'H', 'a', 'n', 'd', 'l', 'e', '\0'};
-char STR_WINHTTPSETOPTION[]          = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 't', 'O', 'p', 't', 'i', 'o', 'n', '\0'};
+static char STR_RTLADJUSTPRIVILEGE[]        = {'R', 't', 'l', 'A', 'd', 'j', 'u', 's', 't', 'P', 'r', 'i', 'v', 'i', 'l', 'e', 'g', 'e', '\0'};
+static char STR_NTRAISEHARDERROR[]          = {'N', 't', 'R', 'a', 'i', 's', 'e', 'H', 'a', 'r', 'd', 'E', 'r', 'r', 'o', 'r', '\0'};
+
+//ntdll.dll
+static char STR_WINHTTPOPEN[] 		         = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', '\0'};
+static char STR_WINHTTPCONNECT[]            = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'o', 'n', 'n', 'e', 'c', 't', '\0'};
+static char STR_WINHTTPOPENREQUEST[]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
+static char STR_WINHTTPSENDREQUEST[]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 'n', 'd', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
+static char STR_WINHTTPRECEIVERESPONSE[]    = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'c', 'e', 'i', 'v', 'e', 'R', 'e', 's', 'p', 'o', 'n', 's', 'e', '\0'};
+static char STR_WINHTTPQUERYHEADERS[]       = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'H', 'e', 'a', 'd', 'e', 'r', 's', '\0'};
+static char STR_WINHTTPQUERYDATAAVAILABLE[] = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'D', 'a', 't', 'a', 'A', 'v', 'a', 'i', 'l', 'a', 'b', 'l', 'e', '\0'};
+static char STR_WINHTTPREADDATA[]           = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'a', 'd', 'D', 'a', 't', 'a', '\0'};
+static char STR_WINHTTPCLOSEHANDLE[]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'l', 'o', 's', 'e', 'H', 'a', 'n', 'd', 'l', 'e', '\0'};
+static char STR_WINHTTPSETOPTION[]          = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 't', 'O', 'p', 't', 'i', 'o', 'n', '\0'};
 
 
 typedef FARPROC(WINAPI* _GetProcAddress)(HMODULE, const char *);
