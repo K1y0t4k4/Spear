@@ -55,13 +55,13 @@ typedef HINTERNET (WINAPI* _WinHttpOpenRequest) (
 	_In_       DWORD     dwFlags
 );
 typedef BOOL (WINAPI* _WinHttpSendRequest) (
-	_In_ 								   HINTERNET hRequest,
-	_In_reads_opt_(dwHeadersLength) 	   LPCWSTR   lpszHeaders,
-	_In_ 								   DWORD     dwHeadersLength,
+	_In_                                   HINTERNET hRequest,
+	_In_reads_opt_(dwHeadersLength)        LPCWSTR   lpszHeaders,
+	_In_                                   DWORD     dwHeadersLength,
 	_In_reads_bytes_opt_(dwOptionalLength) LPVOID    lpOptional,
-	_In_ 								   DWORD     dwOptionalLength,
-	_In_ 								   DWORD     dwTotalLength,
-	_In_ 								   DWORD_PTR dwContext
+	_In_                                   DWORD     dwOptionalLength,
+	_In_                                   DWORD     dwTotalLength,
+	_In_                                   DWORD_PTR dwContext
 );
 typedef BOOL (WINAPI* _WinHttpReceiveResponse) (
 	_In_     HINTERNET hRequest,
@@ -80,19 +80,19 @@ typedef BOOL (WINAPI* _WinHttpQueryDataAvailable) (
   _Out_ LPDWORD   lpdwNumberOfBytesAvailable
 );
 typedef BOOL (WINAPI* _WinHttpReadData) (
-	_In_ 									  HINTERNET hRequest,
+	_In_                                      HINTERNET hRequest,
 	_Out_writes_bytes_(dwNumberOfBytesToRead) LPVOID    lpBuffer,
-	_In_ 									  DWORD     dwNumberOfBytesToRead,
-	_Out_ 									  LPDWORD   lpdwNumberOfBytesRead
+	_In_                                      DWORD     dwNumberOfBytesToRead,
+	_Out_                                     LPDWORD   lpdwNumberOfBytesRead
 );
 typedef BOOL (WINAPI* _WinHttpCloseHandle) (
 	_In_ HINTERNET hInternet
 );
 typedef BOOL (WINAPI* _WinHttpSetOption) (
-	_In_ 							 HINTERNET hInternet,
-	_In_ 							 DWORD     dwOption,
+	_In_                             HINTERNET hInternet,
+	_In_                             DWORD     dwOption,
 	_In_reads_bytes_(dwBufferLength) LPVOID    lpBuffer,
-	_In_ 							 DWORD     dwBufferLength
+	_In_                             DWORD     dwBufferLength
 );
 
 
@@ -131,9 +131,9 @@ typedef struct _WINDOWS {
 		_WinHttpReceiveResponse    rWinHttpReceiveResponse;
 		_WinHttpQueryHeaders       rWinHttpQueryHeaders;
 		_WinHttpQueryDataAvailable rWinHttpQueryDataAvailable;
-		_WinHttpReadData		   rWinHttpReadData;
-		_WinHttpCloseHandle		   rWinHttpCloseHandle;
-		_WinHttpSetOption		   rWinHttpSetOption;
+		_WinHttpReadData	       rWinHttpReadData;
+		_WinHttpCloseHandle        rWinHttpCloseHandle;
+		_WinHttpSetOption          rWinHttpSetOption;
 
 		//ntdll.dll
 		_RtlAdjustPrivilege rRtlAdjustPrivilege;
