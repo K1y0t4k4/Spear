@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef _DEFINE_H_
 #define _DEFINE_H_
 #include <windows.h>
