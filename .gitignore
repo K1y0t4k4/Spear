@@ -1,4 +1,4 @@
 .vscode
+Agent/build
 Agent/src/test.*
-Agent/test.exe
 Agent/test.*
