@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _DEFINE_H_
-#define _DEFINE_H_
+#ifndef _API_H_
+#define _API_H_
 #include <windows.h>
 #include <winhttp.h>
 #include <winternl.h>
