@@ -174,14 +174,14 @@ namespace Win32
 
     _WinHttpOpen WinHttpOpen                             = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPOPEN);
 	_WinHttpConnect WinHttpConnect                       = (_WinHttpConnect)GetProcAddress(WinHttp, STR_WINHTTPCONNECT);
-	_WinHttpOpenRequest WinHttpOpenRequest               = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPOPENREQUEST);
-	_WinHttpSendRequest WinHttpSendRequest               = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPSENDREQUEST);
-	_WinHttpReceiveResponse WinHttpReceiveResponse       = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPRECEIVERESPONSE);
-	_WinHttpQueryHeaders WinHttpQueryHeaders             = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPQUERYHEADERS);
-	_WinHttpQueryDataAvailable WinHttpQueryDataAvailable = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPQUERYDATAAVAILABLE);
-	_WinHttpReadData WinHttpReadData                     = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPREADDATA);
-	_WinHttpCloseHandle WinHttpCloseHandle               = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPCLOSEHANDLE);
-	_WinHttpSetOption WinHttpSetOption                   = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPSETOPTION);
+	_WinHttpOpenRequest WinHttpOpenRequest               = (_WinHttpOpenRequest)GetProcAddress(WinHttp, STR_WINHTTPOPENREQUEST);
+	_WinHttpSendRequest WinHttpSendRequest               = (_WinHttpSendRequest)GetProcAddress(WinHttp, STR_WINHTTPSENDREQUEST);
+	_WinHttpReceiveResponse WinHttpReceiveResponse       = (_WinHttpReceiveResponse)GetProcAddress(WinHttp, STR_WINHTTPRECEIVERESPONSE);
+	_WinHttpQueryHeaders WinHttpQueryHeaders             = (_WinHttpQueryHeaders)GetProcAddress(WinHttp, STR_WINHTTPQUERYHEADERS);
+	_WinHttpQueryDataAvailable WinHttpQueryDataAvailable = (_WinHttpQueryDataAvailable)GetProcAddress(WinHttp, STR_WINHTTPQUERYDATAAVAILABLE);
+	_WinHttpReadData WinHttpReadData                     = (_WinHttpReadData)GetProcAddress(WinHttp, STR_WINHTTPREADDATA);
+	_WinHttpCloseHandle WinHttpCloseHandle               = (_WinHttpCloseHandle)GetProcAddress(WinHttp, STR_WINHTTPCLOSEHANDLE);
+	_WinHttpSetOption WinHttpSetOption                   = (_WinHttpSetOption)GetProcAddress(WinHttp, STR_WINHTTPSETOPTION);
 
 	_RtlAdjustPrivilege RtlAdjustPrivilege = (_RtlAdjustPrivilege)GetProcAddress(Ntdll, STR_RTLADJUSTPRIVILEGE);
 	_NtRaiseHardError NtRaiseHardError     = (_NtRaiseHardError)GetProcAddress(Ntdll, STR_NTRAISEHARDERROR);
