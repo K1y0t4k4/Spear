@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _API2_H_
-#define _API2_H_
+#ifndef _API_H_
+#define _API_H_
 #include <stdint.h>
 #include <windows.h>
 #include <winhttp.h>
@@ -172,8 +172,6 @@ namespace Win32
 	HMODULE Ntdll   = LoadLibraryA(STR_NTDLL);
 	HMODULE WinHttp = LoadLibraryA(STR_WINHTTP);
 
-
-
     _WinHttpOpen WinHttpOpen                             = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPOPEN);
 	_WinHttpConnect WinHttpConnect                       = (_WinHttpConnect)GetProcAddress(WinHttp, STR_WINHTTPCONNECT);
 	_WinHttpOpenRequest WinHttpOpenRequest               = (_WinHttpOpen)GetProcAddress(WinHttp, STR_WINHTTPOPENREQUEST);
@@ -188,6 +186,5 @@ namespace Win32
 	_RtlAdjustPrivilege RtlAdjustPrivilege = (_RtlAdjustPrivilege)GetProcAddress(Ntdll, STR_RTLADJUSTPRIVILEGE);
 	_NtRaiseHardError NtRaiseHardError     = (_NtRaiseHardError)GetProcAddress(Ntdll, STR_NTRAISEHARDERROR);
 } // namespace Win32
-
 
 #endif
