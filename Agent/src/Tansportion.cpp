@@ -79,6 +79,7 @@ void CloseAll(_HINTERNET* HinternetList)
 
 namespace spear
 {
+    // ? I don't know if using so many return is a good idea.
     /// @brief 
     /// @param uri 
     /// @return 
