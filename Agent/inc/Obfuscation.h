@@ -11,9 +11,9 @@ namespace spear
     {
         KeyType key = seed;
         key ^= (key >> 33);
-        key *= 0x114514114514a0c0ull;
+        key *= 0x114514114514a0c0ull; // This string of numbers has no real meaning.
         key ^= (key >> 33);
-        key *= 0x15975316fc6513caull;
+        key *= 0x15975316fc6513caull; // Same as above.
         key ^= (key >> 33);
         key |= 0x1010101010101010ull;
 
