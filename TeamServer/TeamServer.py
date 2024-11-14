@@ -15,6 +15,7 @@ def Register():
 def Recv():
     print("------POST------")
     print(request.get_json())
+    return "{\"status\": \"OK\"}"
 
 app.run("0.0.0.0", 8000, ssl_context=("Certs/server.crt", "Certs/server.key"))
         

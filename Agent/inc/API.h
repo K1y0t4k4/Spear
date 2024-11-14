@@ -35,14 +35,14 @@ typedef HINTERNET (WINAPI* _WinHttpOpenRequest) (
 	_In_       DWORD     dwFlags
 );
 
-typedef BOOL (WINAPI* _WinHttpAddRequestHeaders)(
+typedef WINBOOL (WINAPI* _WinHttpAddRequestHeaders)(
   _In_ HINTERNET hRequest,
   _In_ LPCWSTR   lpszHeaders,
   _In_ DWORD     dwHeadersLength,
   _In_ DWORD     dwModifiers
 );
 
-typedef BOOL (WINAPI* _WinHttpSendRequest) (
+typedef WINBOOL (WINAPI* _WinHttpSendRequest) (
 	_In_                                   HINTERNET hRequest,
 	_In_reads_opt_(dwHeadersLength)        LPCWSTR   lpszHeaders,
 	_In_                                   DWORD     dwHeadersLength,
@@ -51,11 +51,11 @@ typedef BOOL (WINAPI* _WinHttpSendRequest) (
 	_In_                                   DWORD     dwTotalLength,
 	_In_                                   DWORD_PTR dwContext
 );
-typedef BOOL (WINAPI* _WinHttpReceiveResponse) (
+typedef WINBOOL (WINAPI* _WinHttpReceiveResponse) (
 	_In_     HINTERNET hRequest,
 	_In_opt_ LPVOID    lpReserved
 );
-typedef BOOL (WINAPI* _WinHttpQueryHeaders) (
+typedef WINBOOL (WINAPI* _WinHttpQueryHeaders) (
   _In_ 	   HINTERNET hRequest,
   _In_ 	   DWORD     dwInfoLevel,
   _In_opt_ LPCWSTR   pwszName,
@@ -63,20 +63,20 @@ typedef BOOL (WINAPI* _WinHttpQueryHeaders) (
   _Inout_  LPDWORD   lpdwBufferLength,
   _Inout_  LPDWORD   lpdwIndex
 );
-typedef BOOL (WINAPI* _WinHttpQueryDataAvailable) (
+typedef WINBOOL (WINAPI* _WinHttpQueryDataAvailable) (
   _In_  HINTERNET hRequest,
   _Out_ LPDWORD   lpdwNumberOfBytesAvailable
 );
-typedef BOOL (WINAPI* _WinHttpReadData) (
+typedef WINBOOL (WINAPI* _WinHttpReadData) (
 	_In_                                      HINTERNET hRequest,
 	_Out_writes_bytes_(dwNumberOfBytesToRead) LPVOID    lpBuffer,
 	_In_                                      DWORD     dwNumberOfBytesToRead,
 	_Out_                                     LPDWORD   lpdwNumberOfBytesRead
 );
-typedef BOOL (WINAPI* _WinHttpCloseHandle) (
+typedef WINBOOL (WINAPI* _WinHttpCloseHandle) (
 	_In_ HINTERNET hInternet
 );
-typedef BOOL (WINAPI* _WinHttpSetOption) (
+typedef WINBOOL (WINAPI* _WinHttpSetOption) (
 	_In_                             HINTERNET hInternet,
 	_In_                             DWORD     dwOption,
 	_In_reads_bytes_(dwBufferLength) LPVOID    lpBuffer,
