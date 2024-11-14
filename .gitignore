@@ -1,4 +1,5 @@
 .vscode
-Agent/build
+Agent/.cache
+Agent/build/*
 Agent/src/test.*
 Agent/test.*

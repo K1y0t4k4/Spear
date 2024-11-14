@@ -3,7 +3,6 @@
 #define _INSTANCE_H_
 
 #include <string>
-#include <windows.h>
 
 // ? I don't know if using so many std::wstring is a good idea.
 // * I am a beginner in C++.
