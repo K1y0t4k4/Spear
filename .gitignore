@@ -1,5 +1,6 @@
 .vscode
 Agent/.cache
 Agent/build/*
+Agent/bin/*
 Agent/src/test.*
 Agent/test.*

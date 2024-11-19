@@ -45,7 +45,7 @@ namespace spear
 
         constexpr const T* GetBuffer() const
         {
-            return mBuffer;
+            return &mBuffer[0];
         }
     };
 
@@ -75,6 +75,12 @@ namespace spear
             return mBuffer;
         }
     };
+
+    template<typename T, Size N, KeyType Key>
+    constexpr auto makeEncrypt(const T(&string)[N])
+    {
+        return Encrypt<T, N, Key>(string);
+    }
 }
 
 #define KEY spear::GenerateKey(__LINE__)
@@ -82,8 +88,8 @@ namespace spear
     []() -> spear::Decrypt<char, sizeof(string)/sizeof(string[0]), KEY>& \
     { \
         constexpr spear::Size n = sizeof(string)/sizeof(string[0]); \
-        constexpr spear::Encrypt encrypt = spear::Encrypt<char, n, KEY>(string); \
-        static spear::Decrypt decrypt = spear::Decrypt<char, n, KEY>(encrypt); \
+        constexpr auto encrypt = spear::makeEncrypt<char, n, KEY>(string); \
+        static auto decrypt = spear::Decrypt<char, n, KEY>(encrypt); \
         return decrypt; \
     }()
 
@@ -91,8 +97,8 @@ namespace spear
     []() -> spear::Decrypt<wchar_t, sizeof(string)/sizeof(string[0]), KEY>& \
     { \
         constexpr spear::Size n = sizeof(string)/sizeof(string[0]); \
-        constexpr spear::Encrypt encrypt = spear::Encrypt<wchar_t, n, KEY>(string); \
-        static spear::Decrypt decrypt = spear::Decrypt<wchar_t, n, KEY>(encrypt); \
+        constexpr auto encrypt = spear::makeEncrypt<wchar_t, n, KEY>(string); \
+        static auto decrypt = spear::Decrypt<wchar_t, n, KEY>(encrypt); \
         return decrypt; \
     }()
 
