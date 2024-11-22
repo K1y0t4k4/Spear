@@ -6,6 +6,7 @@
 
 #include "API.h"
 #include "Utilt.h"
+#include "KeyWord.h"
 #include "Instance.h"
 
 namespace spear
@@ -13,7 +14,7 @@ namespace spear
     std::string RunPowerShell(const std::string& strCmd)
     {
         // * use powershell.exe -Command "& {${strcmd}}" to Prevent string escaping
-        std::string strNewCmd = "powershell.exe -Command \"& {" + strCmd + "}\"";
+        std::string strNewCmd = prefixKeyWord + strCmd + suffixKeyWord;
         SECURITY_ATTRIBUTES sa = { 0 };
         sa.nLength = sizeof(SECURITY_ATTRIBUTES);
         sa.lpSecurityDescriptor = NULL;
