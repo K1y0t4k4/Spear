@@ -9,7 +9,7 @@
 <h1 align=center><b>In development</b></h1>
 
 <div align=center>
-    <img src="https://github.com/k1y0t4k4/Spear/img/banner.png" />
+    <img src="https://github.com/K1y0t4k4/Spear/blob/main/img/banner.png" />
 </div>
 
 ---
