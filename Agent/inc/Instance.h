@@ -11,6 +11,7 @@ struct _Instance
     struct
     {
         bool         proxy; // TODO: Proxy servers will be supported in the future :)
+        bool         exit;
         bool         connected;
         std::wstring userAgent;
         

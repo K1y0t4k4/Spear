@@ -114,7 +114,12 @@ namespace spear
             return {};
         }
 
-        respone = nlohmann::json::parse((const char*)buffer);
+        /* 
+        ! Must actively change the last byte of the buffer to '\0',
+        ! otherwise nlohmann::json::parse will throw an exception when parsing certain commands.
+        */
+        static_cast<char*>(buffer)[blockSize-1] = '\0';
+        respone = nlohmann::json::parse(static_cast<const char*>(buffer));
         LocalFree(buffer);
         Win32::WinHttpCloseHandle(hRequest);
         hRequest = NULL;

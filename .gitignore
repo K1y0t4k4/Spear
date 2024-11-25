@@ -4,3 +4,4 @@ Agent/build/*
 Agent/bin/*
 Agent/src/test.*
 Agent/test.*
+TeamServer/spear.bat
