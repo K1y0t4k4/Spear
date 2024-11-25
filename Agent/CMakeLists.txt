@@ -6,6 +6,6 @@ include_directories(
     ./inc
     ./dependency
 )
-add_compile_options(-std=c++20 -DDEBUG)
+add_compile_options(-std=c++20)
 set(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc")
 add_executable(${PROJECT_NAME} ${SRC_DIR})
