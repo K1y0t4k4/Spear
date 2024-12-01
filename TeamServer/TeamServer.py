@@ -70,7 +70,7 @@ def Send():
         )
     except KeyboardInterrupt:
         command = "close"
-    
+
     return jsonify(Task_Engine(command))
 
 @app.route("/send", methods=["POST"])
@@ -87,4 +87,4 @@ def Stop_loading():
 
 Banner()
 loading.start()
-app.run("0.0.0.0", 8000, debug=False, ssl_context=("Certs/server.crt", "Certs/server.key"))        
+app.run("0.0.0.0", 8000, debug=False, ssl_context=("Certs/server.crt", "Certs/server.key"))
