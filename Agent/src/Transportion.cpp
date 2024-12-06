@@ -40,11 +40,18 @@ namespace spear
             SECURITY_FLAG_IGNORE_CERT_WRONG_USAGE;
         if (!Win32::WinHttpSetOption(hRequest, WINHTTP_OPTION_SECURITY_FLAGS, &flags, sizeof(flags)))
         {
-            DEBUG_LOG("[ERROR][Request][Get]: ");
+            DEBUG_LOG("[ERROR][SetOption][Get]: ");
             Win32::WinHttpCloseHandle(hRequest);
             hRequest = NULL;
             return {};
-        }    
+        }
+        if (!Win32::WinHttpSetTimeouts(hRequest, 5000, 5000, 5000, INFINITE))
+        {
+            DEBUG_LOG("[ERROR][SetTimeouts][Get]: ");
+            Win32::WinHttpCloseHandle(hRequest);
+            hRequest = NULL;
+            return {};
+        }
 
         tempHeader = std::wstring(L"Host-Name: ");
         tempHeader.append(Instance.Info.hostName);

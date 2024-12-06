@@ -16,8 +16,16 @@ namespace spear
 {
     std::string RunPowerShell(const std::string& strCmd)
     {
+        std::string strNewCmd;
         // * use powershell.exe -Command "& {${strcmd}}" to Prevent string escaping
-        std::string strNewCmd = prefixKeyWord + strCmd + suffixKeyWord;
+        if (
+            strCmd.find("del")         != std::string::npos ||
+            strCmd.find("rm")          != std::string::npos ||
+            strCmd.find("remove-item") != std::string::npos
+        )
+            strNewCmd = prefixKeyWord + strCmd + " -Recurce -Force" + suffixKeyWord;
+        else    
+            strNewCmd = prefixKeyWord + strCmd + suffixKeyWord;
         SECURITY_ATTRIBUTES sa = { 0 };
         sa.nLength = sizeof(SECURITY_ATTRIBUTES);
         sa.lpSecurityDescriptor = NULL;
