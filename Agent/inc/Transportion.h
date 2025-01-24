@@ -3,7 +3,6 @@
 #define _TANSPORTION_H_
 
 #include <string>
-#include <exception>
 #include <nlohmann/json.hpp>
 #include "API.h"
 
@@ -15,7 +14,7 @@ namespace spear
         HINTERNET hSession, hConnect, hRequest;
 
     public:
-        static Transporter& GetInstance()
+        inline static Transporter& GetInstance()
         {
             static Transporter transporter;
             return transporter;

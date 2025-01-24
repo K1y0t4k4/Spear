@@ -5,3 +5,5 @@ Agent/bin/*
 Agent/src/test.*
 Agent/test.*
 TeamServer/spear.bat
+TeamServer/__pycache__
+TeamServer/util/__pycache__/

